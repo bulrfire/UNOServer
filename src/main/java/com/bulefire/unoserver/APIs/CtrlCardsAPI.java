@@ -22,7 +22,7 @@ public class CtrlCardsAPI {
     //出牌
     @RequestMapping("/api/post/CtrlCards")
     public ResponseEntity<Object> a(@RequestBody inputCtrl input) {
-        if(CardCtrl.start(input.getPlayer(),input.getColor(),input.getNumber())){
+        if(CardCtrl.start(input.getDid(), input.getPlayer(),input.getColor(),input.getNumber())){
             return ResponseEntity.ok().body("Success" + "下一个 玩家：" + match.getPlayer() + " 颜色：" + match.getColor() + " 点数：" + match.getNumber());
         }
         return ResponseEntity.badRequest().body("failed" + "下一个 玩家：" + match.getPlayer() + " 颜色：" + match.getColor() + " 点数：" + match.getNumber());

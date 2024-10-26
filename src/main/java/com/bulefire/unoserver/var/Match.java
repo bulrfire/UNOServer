@@ -14,6 +14,11 @@ public class Match {
     private static boolean isInitialize;//是否完成初始化
     private static boolean isMaster;//是否有房主
 
+    //魔改规则里用
+    private static int maxNumber;            // 最高点数
+    private static boolean canAddCardNumber; //是否可以叠加点数
+
+
     public boolean isIsMaster() {
         return isMaster;
     }
@@ -30,17 +35,13 @@ public class Match {
         Match.isInitialize = isInitialize;
     }
 
-    public static String getModel() {
+    public String getModel() {
         return model;
     }
 
-    public static void setModel(String model) {
+    public void setModel(String model) {
         Match.model = model;
     }
-
-    //魔改规则里用
-    private static int maxNumber;            // 最高点数
-    private static boolean canAddCardNumber; //是否可以叠加点数
 
     public boolean isStart() {
         return start;

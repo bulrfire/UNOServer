@@ -307,19 +307,19 @@ public class CardNumber {
         CardNumber.specialCardUniversalAdd4 = specialCardUniversalAdd4;
     }
 
-    public static int getMaxCardNumber() {
+    public int getMaxCardNumber() {
         return maxCardNumber;
     }
 
-    public static void setMaxCardNumber(int maxCardNumber) {
+    public void setMaxCardNumber(int maxCardNumber) {
         CardNumber.maxCardNumber = maxCardNumber;
     }
 
-    public static int getMaxAllCardNumber() {
+    public int getMaxAllCardNumber() {
         return maxAllCardNumber;
     }
 
-    public static void setMaxAllCardNumber(int maxAllCardNumber) {
+    public void setMaxAllCardNumber(int maxAllCardNumber) {
         CardNumber.maxAllCardNumber = maxAllCardNumber;
     }
 }

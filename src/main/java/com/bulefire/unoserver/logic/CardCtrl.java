@@ -4,19 +4,21 @@ import com.bulefire.unoserver.Index;
 import com.bulefire.unoserver.var.CardNumber;
 import com.bulefire.unoserver.var.Match;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Component
+@Service
 public class CardCtrl {
     //引入对局
     public static Match m = Index.match;
     public static CardNumber cd = Index.cardNumber;
     //开始
-    public static boolean start(int player, String color, int number){
+    public static boolean start(String did, int player, String color, int number){
         if (!m.isStart()){
             return false;
         }
         //判断数据是否合法
-        if (isCan(player,color,number)){
+        if (isCan(did,player,color,number)){
             //返回是否成功
             return updateMatch(player,color,number);
         }
@@ -50,11 +52,26 @@ public class CardCtrl {
         } else if (!m.getCanAddCardNumber()) {
         m.setNumber(number);
         }
+        //更新牌数
+        switch (color){
+            case "GREEN":
+                cd.setOrdinaryCardGreen(cd.getOrdinaryCardGreen() - 1);
+                break;
+            case "RED":
+                cd.setOrdinaryCardRed(cd.getOrdinaryCardRed() - 1);
+                break;
+            case "BLUE":
+                cd.setOrdinaryCardBlue(cd.getOrdinaryCardBlue() - 1);
+                break;
+            case "YELLOW":
+                cd.setOrdinaryCardYellow(cd.getOrdinaryCardYellow() - 1);
+                break;
+        }
         //System.out.println("更新点数为：" + m.getNumber());
         return true;
     }
     //判断是否可以出牌
-    public static boolean isCan(int player, String color, int number){
+    public static boolean isCan(String did, int player, String color, int number){
         //判断是否为第一个数
         if (m.getPlayerNumber() == -1){
             return true;
@@ -67,6 +84,32 @@ public class CardCtrl {
             //System.out.println("不合法颜色");
             return false;
         }
+        //判断 特殊牌
+        if (!(did.equals("Rollback") || did.equals("Forbid") || did.equals("Add2") || did.equals("Universal") || did.equals("UniversalAdd4"))){
+            return false;
+        }
+        //判断是否有牌
+        if (color.equals("GREEN")){
+            if (cd.getOrdinaryCardGreen() == 0){
+                return false;
+            }
+        }
+        if (color.equals("RED")){
+            if (cd.getOrdinaryCardRed() == 0){
+                return false;
+            }
+        }
+        if (color.equals("BLUE")){
+            if (cd.getOrdinaryCardBlue() == 0){
+                return false;
+            }
+        }
+        if (color.equals("YELLOW")){
+            if (cd.getOrdinaryCardYellow() == 0){
+                return false;
+            }
+        }
+        //TODO 添加特殊牌检查
         //判断   玩家是否正确          与           颜色是否正确       或           点数是否正确
         if (player == m.getPlayer() && (color.equals(m.getColor()) || number == m.getNumber())){
             //System.out.println("合法数据");
